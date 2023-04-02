@@ -1,0 +1,31 @@
+
+
+TEST 1: Undirected, unweighted, gph_readFile()
+[0;32m TEST 1 OK.
+[0mTEST 2: Undirected, unweighted, gph_bfsToTarget()
+[0;32m TEST 2 OK.
+[0mLEAK CHECK: Won't do valgrind this time
+ight info
+==12634== Command: ./unit_test valgrind
+==12634== Parent PID: 12633
+==12634== 
+==12634== 
+==12634== HEAP SUMMARY:
+==12634==     in use at exit: 256 bytes in 7 blocks
+==12634==   total heap usage: 34 allocs, 27 frees, 9,352 bytes allocated
+==12634== 
+==12634== 256 (116 direct, 140 indirect) bytes in 1 blocks are definitely lost in loss record 3 of 3
+==12634==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==12634==    by 0x485C5D5: gph_build (graph.c:6)
+==12634==    by 0x485C758: gph_readFile (graph.c:40)
+==12634==    by 0x1092A2: main (in /home/etleyden/Development/C/Graph/unit_test)
+==12634== 
+==12634== LEAK SUMMARY:
+==12634==    definitely lost: 116 bytes in 1 blocks
+==12634==    indirectly lost: 140 bytes in 6 blocks
+==12634==      possibly lost: 0 bytes in 0 blocks
+==12634==    still reachable: 0 bytes in 0 blocks
+==12634==         suppressed: 0 bytes in 0 blocks
+==12634== 
+==12634== For lists of detected and suppressed errors, rerun with: -s
+==12634== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)

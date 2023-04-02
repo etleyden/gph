@@ -6,11 +6,11 @@
 #include <stdio.h>
 
 int main() {
-    Graph* g = gph_readFile("tests/simple.txt", 0);
+    Graph* g = gph_readFile("tests/ex_graphs/simple.txt", 0, 0);
     gph_printAdj(g); 
     gph_LLNode *path = gph_bfsToTarget(g, 0, 3);
 
-    print_LLNodes(path); 
+    print_LLNodes(path);  
     destroy_LLNodes(path);
     gph_destroy(g);
 }

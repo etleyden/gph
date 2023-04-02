@@ -61,7 +61,8 @@ void gph_addEdge(Graph*, int, int, int);
 void gph_printAdj(Graph*);
 
 /*
- * Performs BFS and returns a Vertex with parent pointers from target to source
+ * Performs BFS and returns a linked list of parent pointers from target to source.
+ * Graph must be UNWEIGHTED
  * Args: Graph, int source, int target
  */
 gph_LLNode* gph_bfsToTarget(Graph*, int, int);
