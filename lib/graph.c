@@ -1,5 +1,6 @@
 #include "graph.h"
 #include <stdio.h>
+#include <limits.h>
 
 Graph* gph_build(int size) {
     int size_adj = size * size * sizeof(int);
@@ -80,6 +81,11 @@ void gph_destroy(Graph *g) {
 }
 
 void gph_addEdge(Graph *g, int u, int v, int w) {
+
+    if(fabs(w) > g->max) {
+        g->max = fabs(w);
+    }
+
     g->adj[u][v] = w;
     if(g->isDirected == 0) {
         g->adj[v][u] = w;
@@ -89,19 +95,24 @@ void gph_addEdge(Graph *g, int u, int v, int w) {
 void gph_printAdj(Graph *g) {
     int i = 0;
     int size = g->num_vertices;
+    int width = 2 + (int) log10(g->max);
 
     //header
-    printf("  "); //empty first cell
+    printf("%*s|", width, ""); //empty first cell
     for(; i < size; i++) {
-        printf(" %d", i);
+        printf("%-*d|", width, i);
     }
     printf("\n");
     //Each row
     for(i = 0; i < size; i++) {
         int j = 0;
-        printf("%d ", i);
+        printf("%-*d|", width, i);
         for(; j < size; j++) {
-            printf(" %d", g->adj[i][j]);
+            if(g->adj[i][j] != 0) {
+                printf("%-*d|", width, g->adj[i][j]);
+            } else {
+                printf("%*s|", width,"");
+            }
         }
         printf("\n");
     }
@@ -168,4 +179,50 @@ gph_Queue *gph_getNeighbors(Graph *g, int u)
         }
     }
     return q;
+}
+
+int* gph_dijkstra(Graph *g, int s) {
+    //Init array of distances
+    int* dist = malloc(sizeof(int) * g->num_vertices);
+    int gph_size = g->num_vertices;
+    int i;
+    int visited[gph_size];
+    for(i = 0; i < gph_size; i++) {
+        if(i == s) {
+            dist[i] = 0;
+            visited[i] = 1;
+        } else {
+            visited[i] = 0;
+            dist[i] = INT_MAX;
+        }
+    }
+
+    //Init queue
+    gph_Queue *q = build_Queue();
+    gph_qAppendInt(q, s);
+
+    while(q->size > 0) {
+        gph_LLNode *current = gph_qPop(q);
+        int u = current->val;
+        gph_Queue *neighbors = gph_getNeighbors(g, u);
+
+        while(neighbors->size > 0) {
+            gph_LLNode *neighbor = gph_qPop(neighbors);
+            int v = neighbor->val;
+            if(visited[v] == 0) {
+                gph_qAppendInt(q, v);
+                visited[v] = 1;
+            }
+            if(dist[v] == INT_MAX || dist[u] + g->adj[u][v] < dist[v]) {
+                dist[v] = dist[u] + g->adj[u][v];
+            }
+            free(neighbor);
+        }
+
+        destroy_Queue(neighbors);
+        free(current);
+    }
+
+    destroy_Queue(q);
+    return dist;
 }

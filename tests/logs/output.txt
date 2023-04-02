@@ -1,2 +1,0 @@
-==12634== 256 (116 direct, 140 indirect) bytes in 1 blocks are definitely lost in loss record 3 of 3
-==12634==    definitely lost: 116 bytes in 1 blocks

@@ -6,11 +6,14 @@ This is a C library intended to provide simple and straightforward utilities for
 
 Running `make` in the top directory will build tests/playground.c
 
-Running `make build_units` in the top directory will build tests/unit_test.c
+`make unit_test` in the top directory will build tests/unit_test.c
 
-Running `make` in the lib directory will build the library both as `.so` and `.a`, so you can use it in your own projects.
+`make` in the lib directory will build the library both as `.so` and `.a`, so you can use it in your own projects.
 
 As usual, `make clean` will get rid of anything built after you cloned the repo.
+
+`make clean_logs` will remove all .txt files in tests/logs
+
 
 ### TODO
 

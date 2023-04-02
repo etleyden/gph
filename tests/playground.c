@@ -6,11 +6,16 @@
 #include <stdio.h>
 
 int main() {
-    Graph* g = gph_readFile("tests/ex_graphs/simple.txt", 0, 0);
-    gph_printAdj(g); 
-    gph_LLNode *path = gph_bfsToTarget(g, 0, 3);
+    Graph* g = gph_readFile("tests/ex_graphs/dijkstra.txt", GPH_UNDIRECTED, GPH_WEIGHTED);
 
-    print_LLNodes(path);  
-    destroy_LLNodes(path);
+    gph_printAdj(g); 
+    int *shortest_paths = gph_dijkstra(g, 0);
+    int gph_size = g->num_vertices;
+    int i;
+    for(i = 0; i < gph_size; i++) {
+        printf("%d: %d\n", i, shortest_paths[i]);
+    }
+    
+    free(shortest_paths);
     gph_destroy(g);
 }

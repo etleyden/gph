@@ -7,7 +7,6 @@ LIB_PATH = ./lib
 all: dev_build
 
 # Make and run the active development tests in one command
-.SILENT:
 go:
 	make build_dev -s
 	./test
@@ -16,6 +15,7 @@ dev_build:
 	cd lib && make
 	gcc -Wall -o test $(TEST_FILES) $(LIB_PATH)/graph.so -I$(LIB_PATH)
 
+.PHONY: unit_test
 unit_test:
 	cd lib && make
 	gcc -Wall -o unit_test $(UNIT_TEST) $(LIB_PATH)/graph.so -I$(LIB_PATH)
@@ -24,8 +24,9 @@ unit_test:
 clean_logs:
 	rm -f tests/logs/*.txt
 
-clean:
+clean: clean_logs
 	cd lib && make clean -s
 	rm -f test
 	rm -f unit_test
+	
 	

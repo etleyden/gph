@@ -1,12 +1,19 @@
 #include "gph_util.h"
 #include <stdlib.h>
+#include <math.h>
 #ifndef LIBGPH_H_
 #define LIBGPH_H_
 #define MAX_BUFFER 255
+#define GPH_DIRECTED 1
+#define GPH_UNDIRECTED 0
+#define GPH_WEIGHTED 1
+#define GPH_UNWEIGHTED 0
+
 typedef struct {
+    int isDirected;
+    int max; //maximum value in the graph (helpful when printing);
     int **adj;
     int num_vertices;
-    int isDirected;
 } Graph;
 typedef struct Vertex {
     int value;
@@ -71,6 +78,11 @@ gph_LLNode* gph_bfsToTarget(Graph*, int, int);
  * Get a linked list of the neighbors of a particular node
  */
 gph_Queue* gph_getNeighbors(Graph*, int);
+
+/*
+ * Performs Dijkstra's and returns an array of the shortest distances
+ */
+int* gph_dijkstra(Graph*, int);
 #endif
 
 
